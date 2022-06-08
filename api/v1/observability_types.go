@@ -103,6 +103,7 @@ type ObservabilitySpec struct {
 	AlertManagerDefaultName string                `json:"alertManagerDefaultName,omitempty"`
 	PrometheusDefaultName   string                `json:"prometheusDefaultName,omitempty"`
 	GrafanaDefaultName      string                `json:"grafanaDefaultName,omitempty"`
+	GrafanaOperatorVersion  string                `json:"grafanaOperatorVersion,omitempty"`
 }
 
 // ObservabilityStatus defines the observed state of Observability

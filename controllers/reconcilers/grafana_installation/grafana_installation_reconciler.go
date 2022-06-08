@@ -155,11 +155,12 @@ func (r *Reconciler) deleteUnrequestedSubscriptions(ctx context.Context, cr *v1.
 
 func (r *Reconciler) reconcileCatalogSource(ctx context.Context, cr *v1.Observability) (v1.ObservabilityStageStatus, error) {
 	source := model.GetGrafanaCatalogSource(cr)
+	version := model.GetGrafanaOperatorVersion(cr)
 
 	_, err := controllerutil.CreateOrUpdate(ctx, r.client, source, func() error {
 		source.Spec = v1alpha1.CatalogSourceSpec{
 			SourceType: v1alpha1.SourceTypeGrpc,
-			Image:      "quay.io/rhoas/grafana-operator-index:v3.10.5",
+			Image:      "quay.io/rhoas/grafana-operator-index:" + version,
 		}
 		return nil
 	})
@@ -174,6 +175,7 @@ func (r *Reconciler) reconcileCatalogSource(ctx context.Context, cr *v1.Observab
 func (r *Reconciler) reconcileSubscription(ctx context.Context, cr *v1.Observability) (v1.ObservabilityStageStatus, error) {
 	subscription := model.GetGrafanaSubscription(cr)
 	source := model.GetGrafanaCatalogSource(cr)
+	version := model.GetGrafanaOperatorVersion(cr)
 
 	_, err := controllerutil.CreateOrUpdate(ctx, r.client, subscription, func() error {
 		subscription.Spec = &v1alpha1.SubscriptionSpec{
@@ -181,7 +183,7 @@ func (r *Reconciler) reconcileSubscription(ctx context.Context, cr *v1.Observabi
 			CatalogSourceNamespace: source.Namespace,
 			Package:                "grafana-operator",
 			Channel:                "alpha",
-			StartingCSV:            "grafana-operator.v3.10.5",
+			StartingCSV:            "grafana-operator." + version,
 			Config:                 v1alpha1.SubscriptionConfig{Resources: model.GetGrafanaOperatorResourceRequirement(cr)},
 		}
 		return nil

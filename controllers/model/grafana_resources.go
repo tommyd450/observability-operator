@@ -19,6 +19,14 @@ func GetDefaultNameGrafana(cr *v1.Observability) string {
 	return "kafka-grafana"
 }
 
+func GetGrafanaOperatorVersion(cr *v1.Observability) string {
+	if cr.Spec.GrafanaOperatorVersion != "" {
+		return cr.Spec.GrafanaOperatorVersion
+	} else {
+		return "v3.10.5"
+	}
+}
+
 func GetGrafanaCatalogSource(cr *v1.Observability) *v1alpha1.CatalogSource {
 	return &v1alpha1.CatalogSource{
 		ObjectMeta: v12.ObjectMeta{

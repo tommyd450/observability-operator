@@ -408,6 +408,8 @@ spec:
                 type: object
               grafanaDefaultName:
                 type: string
+              grafanaOperatorVersion:
+                type: string
               prometheusDefaultName:
                 type: string
               resyncPeriod:

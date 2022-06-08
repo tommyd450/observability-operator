@@ -373,8 +373,9 @@ func observabilityInstanceWithoutStorage(namespace string) apiv1.Observability {
 			Labels:    map[string]string{"managed-by": "observability-operator"},
 		},
 		Spec: apiv1.ObservabilitySpec{
-			ResyncPeriod: "1h",
-			Retention:    "45d",
+			ResyncPeriod:           "1h",
+			Retention:              "45d",
+			GrafanaOperatorVersion: "v3.10.5",
 			SelfContained: &apiv1.SelfContained{
 				DisableBlackboxExporter: &([]bool{true})[0],
 			},
